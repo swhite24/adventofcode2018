@@ -15,16 +15,17 @@ func main() {
 		log.Fatalf("failed to read input: %s", err.Error())
 	}
 
-	fmt.Println("checksum: ", getchecksum(lines))
+	fmt.Println("checksum: ", getCheckSum(lines))
+	fmt.Println("fabric box: ", getFabricBox(lines))
 }
 
-func getchecksum(lines []string) int {
+func getCheckSum(lines []string) int {
 	var twocount int
 	var threecount int
 	for _, line := range lines {
 		var hastwo bool
 		var hasthree bool
-		legend := process(line)
+		legend := getOccurrences(line)
 		for _, count := range legend {
 			if count == 2 {
 				hastwo = true
@@ -44,7 +45,34 @@ func getchecksum(lines []string) int {
 	return twocount * threecount
 }
 
-func process(line string) map[string]int {
+func getFabricBox(lines []string) string {
+	var common string
+main:
+	for _, line := range lines {
+		for _, comp := range lines {
+			common = ""
+			if line == comp {
+				continue
+			}
+			diff := 0
+			for i := 0; i < len(line); i++ {
+				c := line[i]
+				if c != comp[i] {
+					diff++
+				} else {
+					common += string(c)
+				}
+			}
+			if diff == 1 {
+				break main
+			}
+		}
+	}
+
+	return common
+}
+
+func getOccurrences(line string) map[string]int {
 	legend := map[string]int{}
 	for _, c := range line {
 		legend[string(c)]++
