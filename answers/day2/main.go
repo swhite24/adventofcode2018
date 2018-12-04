@@ -10,13 +10,17 @@ import (
 func main() {
 	var err error
 	var lines []string
-	var twocount int
-	var threecount int
 
 	if lines, err = util.GetInputLines(2); err != nil {
 		log.Fatalf("failed to read input: %s", err.Error())
 	}
 
+	fmt.Println("checksum: ", getchecksum(lines))
+}
+
+func getchecksum(lines []string) int {
+	var twocount int
+	var threecount int
 	for _, line := range lines {
 		var hastwo bool
 		var hasthree bool
@@ -37,10 +41,7 @@ func main() {
 			threecount++
 		}
 	}
-
-	fmt.Println("twocount: ", twocount)
-	fmt.Println("threecount: ", threecount)
-	fmt.Println("checksum: ", twocount*threecount)
+	return twocount * threecount
 }
 
 func process(line string) map[string]int {
