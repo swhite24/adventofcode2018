@@ -2,6 +2,7 @@ package util
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 )
 
@@ -11,7 +12,7 @@ func GetInputLines(day int) ([]string, error) {
 	var file *os.File
 	lines := []string{}
 
-	if file, err = os.Open("../../inputs/day1.txt"); err != nil {
+	if file, err = os.Open(fmt.Sprintf("../../inputs/day%d.txt", day)); err != nil {
 		return nil, err
 	}
 
